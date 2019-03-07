@@ -1,3 +1,5 @@
+import java.util.*;
+import java.io.*;
 public class USACO{
 
   /**
@@ -111,7 +113,14 @@ public class USACO{
 
   **********************************************************
   */
-  public static int bronze(String filename){
+  public static int bronze(String filename) throws FileNotFoundException{
+    File text = new File(filename);
+    Scanner scanner = new Scanner(text);
+    while(scanner.hasNextLine())
+      {
+        String line = scanner.nextLine();
+        System.out.println(line);
+      }
   }
   /**
   SILVER Problem 7: Cow Travelling [Aram Shatakhtsyan, 2007]
