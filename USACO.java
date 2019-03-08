@@ -118,17 +118,33 @@ public class USACO{
     File text = new File(filename);
     Scanner scanner = new Scanner(text);
     int lineCounter = 1;
-    int row,col,elev,instr;
+    int row = 0;
+    int col = 0;
+    int elev = 0;
+    int instr = 0;
+    int[][] lake = new int[0][0];
     while(scanner.hasNextLine())
     {
       String line = scanner.nextLine();
       String[] numArray = line.split(" ");
       if(lineCounter == 1)
       {
-        parseInt(numArray[0]) = row;
-        parseInt(numArray[1]) = col;
-        parseInt(numArray[2]) = elev;
-        parseInt(numArray[3]) = instr;
+        row = Integer.parseInt(numArray[0]);
+        col = Integer.parseInt(numArray[1]);
+        elev = Integer.parseInt(numArray[2]);
+        instr = Integer.parseInt(numArray[3]);
+        lake = new int[row][col];
+      }
+      if(lineCounter > 1 && lineCounter <= row + 1)
+      {
+        for(int i = 0 ; i < numArray.length; i ++)
+        {
+          lake[lineCounter-2][i] = Integer.parseInt(numArray[i]);
+        }
+      }
+      if(lineCounter > row + 1 && lineCounter < row + instr + 1)
+      {
+        // parse and stomp
       }
       System.out.println(line);
       lineCounter ++;
