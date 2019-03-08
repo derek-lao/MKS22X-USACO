@@ -255,5 +255,7 @@ public class USACO{
   There is only one way from (1,3) to (1,5) in exactly 6 seconds (and
   it is the obvious one that travels around the two trees).
   */
-  public static int silver(String filename){}
+  public static int silver(String filename){
+    return -1; //so it compiles
+  }
 }
