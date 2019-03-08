@@ -255,7 +255,18 @@ public class USACO{
   There is only one way from (1,3) to (1,5) in exactly 6 seconds (and
   it is the obvious one that travels around the two trees).
   */
-  public static int silver(String filename){
+  public static int silver(String filename) throws FileNotFoundException{
+    File text = new File(filename);
+    Scanner scanner = new Scanner(text);
+    int lineCounter = 1;
+    int row = 0;
+    int col = 0;
+    int[][] start = new int[1][1];
+    int[][] end = new int[1][1];
+    while(scanner.hasNextLine())
+    {
+
+    }
     return -1; //so it compiles
   }
 }
