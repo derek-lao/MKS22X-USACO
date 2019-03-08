@@ -151,9 +151,9 @@ public class USACO{
         int stompDepth = Integer.parseInt(numArray[2]);
         int highestElevation = 0;
         int highestElevationAfterStomping;
-        for(int r = rowStart ; r < rowStart + 2 ; r ++)
+        for(int r = rowStart ; r < rowStart + 3 ; r ++)
         {
-          for(int c = colStart ; c < colStart + 2 ; c ++)
+          for(int c = colStart ; c < colStart + 3 ; c ++)
           {
             if(field[r-1][c-1] > highestElevation)
             highestElevation = field[r-1][c-1];
@@ -169,9 +169,9 @@ public class USACO{
           highestElevationAfterStomping = highestElevation - stompDepth;
         }
 
-        for(int r = rowStart ; r < rowStart + 2 ; r ++)
+        for(int r = rowStart ; r < rowStart + 3 ; r ++)
         {
-          for(int c = colStart ; c < colStart + 2 ; c ++)
+          for(int c = colStart ; c < colStart + 3 ; c ++)
           {
             if(field[r-1][c-1] > highestElevationAfterStomping)
             {
@@ -180,7 +180,7 @@ public class USACO{
           }
         }
       }
-      System.out.println(line);
+      // System.out.println(line);
       lineCounter ++;
     }
     for(int r = 0 ; r < row ; r ++)
