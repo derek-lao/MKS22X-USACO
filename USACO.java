@@ -122,7 +122,8 @@ public class USACO{
     int col = 0;
     int elev = 0;
     int instr = 0;
-    int[][] lake = new int[0][0];
+    int[][] field = new int[0][0];
+    int total = 0;
     while(scanner.hasNextLine())
     {
       String line = scanner.nextLine();
@@ -133,22 +134,66 @@ public class USACO{
         col = Integer.parseInt(numArray[1]);
         elev = Integer.parseInt(numArray[2]);
         instr = Integer.parseInt(numArray[3]);
-        lake = new int[row][col];
+        field = new int[row][col];
       }
       if(lineCounter > 1 && lineCounter <= row + 1)
       {
         for(int i = 0 ; i < numArray.length; i ++)
         {
-          lake[lineCounter-2][i] = Integer.parseInt(numArray[i]);
+          field[lineCounter-2][i] = Integer.parseInt(numArray[i]);
         }
       }
-      if(lineCounter > row + 1 && lineCounter < row + instr + 1)
+      if(lineCounter > row + 1)
       {
         // parse and stomp
+        int rowStart = Integer.parseInt(numArray[0]);
+        int colStart = Integer.parseInt(numArray[1]);
+        int stompDepth = Integer.parseInt(numArray[2]);
+        int highestElevation = 0;
+        int highestElevationAfterStomping;
+        for(int r = rowStart ; r < rowStart + 2 ; r ++)
+        {
+          for(int c = colStart ; c < colStart + 2 ; c ++)
+          {
+            if(field[r-1][c-1] > highestElevation)
+            highestElevation = field[r-1][c-1];
+          }
+        }
+
+        if(highestElevation <= stompDepth)
+        {
+          highestElevationAfterStomping = 0;
+        }
+        else
+        {
+          highestElevationAfterStomping = highestElevation - stompDepth;
+        }
+
+        for(int r = rowStart ; r < rowStart + 2 ; r ++)
+        {
+          for(int c = colStart ; c < colStart + 2 ; c ++)
+          {
+            if(field[r-1][c-1] > highestElevationAfterStomping)
+            {
+              field[r-1][c-1] = highestElevationAfterStomping;
+            }
+          }
+        }
       }
       System.out.println(line);
       lineCounter ++;
     }
+    for(int r = 0 ; r < row ; r ++)
+    {
+      for(int c = 0; c < col ; c ++)
+      {
+        if(field[r][c] < elev)
+        {
+          total += elev - field[r][c];
+        }
+      }
+    }
+    return total * 72 * 72;
   }
   /**
   SILVER Problem 7: Cow Travelling [Aram Shatakhtsyan, 2007]
