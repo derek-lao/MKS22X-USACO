@@ -1,5 +1,6 @@
 import java.util.*;
 import java.io.*;
+import java.lang.Integer.*;
 public class USACO{
 
   /**
@@ -116,11 +117,22 @@ public class USACO{
   public static int bronze(String filename) throws FileNotFoundException{
     File text = new File(filename);
     Scanner scanner = new Scanner(text);
+    int lineCounter = 1;
+    int row,col,elev,instr;
     while(scanner.hasNextLine())
+    {
+      String line = scanner.nextLine();
+      String[] numArray = line.split(" ");
+      if(lineCounter == 1)
       {
-        String line = scanner.nextLine();
-        System.out.println(line);
+        parseInt(numArray[0]) = row;
+        parseInt(numArray[1]) = col;
+        parseInt(numArray[2]) = elev;
+        parseInt(numArray[3]) = instr;
       }
+      System.out.println(line);
+      lineCounter ++;
+    }
   }
   /**
   SILVER Problem 7: Cow Travelling [Aram Shatakhtsyan, 2007]
