@@ -261,11 +261,37 @@ public class USACO{
     int lineCounter = 1;
     int row = 0;
     int col = 0;
+    int sec = 0;
+    int rowDiff = 0;
+    int colDiff = 0;
+    int[][] field = new int[0][0];
     int[][] start = new int[1][1];
     int[][] end = new int[1][1];
     while(scanner.hasNextLine())
     {
-
+      String line = scanner.nextLine();
+      String[] numArray = line.split(" ");
+      if(lineCounter == 1)
+      {
+        row = Integer.parseInt(numArray[0]);
+        col = Integer.parseInt(numArray[1]);
+        sec = Integer.parseInt(numArray[2]);
+        field = new int[row][col];
+      }
+      if(lineCounter >= 2 && lineCounter <= row + 1)
+      {
+        for(int i = 0; i < col; i ++)
+        {
+          if(numArray[i].charAt(0) == '.')
+          {
+            field[lineCounter-2][i] = 0;
+          }
+          else
+          {
+            field[lineCounter-2][i] = -1;
+          }
+        }
+      }
     }
     return -1; //so it compiles
   }
