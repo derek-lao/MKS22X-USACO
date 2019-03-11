@@ -261,12 +261,18 @@ public class USACO{
     int lineCounter = 1;
     int row = 0;
     int col = 0;
-    int sec = 0;
+    int time = 0;
     int rowDiff = 0;
     int colDiff = 0;
-    int[][] field = new int[0][0];
-    int[][] start = new int[1][1];
-    int[][] end = new int[1][1];
+    int[][] field = new int[1][1];
+    int[][] odd = new int[1][1];
+    int[][] even = new int[1][1];
+    int[] start = new int[2];
+    int[] end = new int[2];
+    int distance = 0;
+
+    int[] rowInc = { 1, 0,-1, 0};
+    int[] colInc = { 0, 1, 0,-1};
     while(scanner.hasNextLine())
     {
       String line = scanner.nextLine();
@@ -275,15 +281,19 @@ public class USACO{
       {
         row = Integer.parseInt(numArray[0]);
         col = Integer.parseInt(numArray[1]);
-        sec = Integer.parseInt(numArray[2]);
+        time = Integer.parseInt(numArray[2]);
         field = new int[row][col];
+        even = new int[row][col];
+        odd = new int[row][col];
       }
       if(lineCounter >= 2 && lineCounter <= row + 1)
       {
         for(int i = 0; i < col; i ++)
         {
-          if(numArray[i].charAt(0) == '.')
+          if(line.charAt(i) == '.')
           {
+            // System.out.println("i is now " + i);
+            // System.out.println("The string at numArray[i] is " + numArray[i]);
             field[lineCounter-2][i] = 0;
           }
           else
@@ -292,7 +302,95 @@ public class USACO{
           }
         }
       }
+      if(lineCounter == row + 2)
+      {
+        start[0] = Integer.parseInt(numArray[0]);
+        // System.out.println("numArray[0] is " + start[0]);
+        start[1] = Integer.parseInt(numArray[1]);
+        // System.out.println("numArray[1] is " + start[1]);
+        end[0] = Integer.parseInt(numArray[2]);
+        // System.out.println("numArray[2] is " + end[0]);
+        end[1] = Integer.parseInt(numArray[3]);
+        rowDiff = Math.abs(start[0] - end[0]);
+        colDiff = Math.abs(start[1] - end[1]);
+        distance = rowDiff + colDiff;
+        for(int r = 0; r < row; r ++)
+        {
+          for(int c = 0; c < col; c ++)
+          {
+            even[r][c] = field[r][c];
+            odd[r][c] = field[r][c];
+          }
+        }
+        field[start[0] - 1][start[1] - 1] = 1;
+        even[start[0] - 1][start[1] - 1] = 1;
+        for(int sec = 0; sec < time; sec ++)
+        {
+          for(int r = 0; r < row; r ++)
+          {
+            for(int c = 0; c < col; c ++)
+            {
+              if(sec % 2 == 1)
+              {
+                if(even[r][c] != -1)
+                {
+                  even[r][c] = 0;
+                  for(int i = 0; i < 4; i ++) // loop to add from all four surrounding squares
+                  {
+                    int nextRow = r + rowInc[i];
+                    int nextCol = c + colInc[i];
+                    boolean inBounds = (nextRow > -1 && nextRow < row) &&
+                    (nextCol > -1 && nextCol < col);
+                    if(inBounds) // in bounds check
+                    {
+                      if(odd[nextRow][nextCol] != -1) // check to make sure not adding tree
+                      {
+                        even[r][c] += odd[nextRow][nextCol];
+                      }
+                    }
+                  }
+                }
+                // System.out.print(odd[r][c] + " ");
+              }
+              if(sec % 2 == 0)
+              {
+                if(odd[r][c] != -1)
+                {
+                  odd[r][c] = 0;
+                  for(int i = 0; i < 4; i ++)
+                  {
+                    int nextRow = r + rowInc[i];
+                    int nextCol = c + colInc[i];
+                    boolean inBounds = (nextRow > -1 && nextRow < row) &&
+                    (nextCol > -1 && nextCol < col);
+                    if(inBounds)
+                    {
+                      if(even[nextRow][nextCol] != -1)
+                      {
+                        odd[r][c] += even[nextRow][nextCol];
+                      }
+                    }
+                  }
+                }
+                // System.out.print(even[r][c] + " ");
+              }
+            }
+            // System.out.println();
+          } // now we are done cycling between all the coordinates on the board
+          // System.out.println(odd);
+          // System.out.println(even);
+        }
+        if(time % 2 == 1)
+        {
+          return odd[end[0] - 1][end[1] - 1];
+        }
+        if(time % 2 == 0)
+        {
+          return even[end[0] - 1][end[1] - 1];
+        }
+      }
+      lineCounter ++;
     }
-    return -1; //so it compiles
+    return -2; //so it compiles
   }
 }
